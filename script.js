@@ -7,7 +7,7 @@ const DEFAULTS = {
     work: 25,
     short: 5,
     long: 15,
-    auto: false,
+    autorestart: false,
     autostart: false,
     sound: 'bell'
 };
