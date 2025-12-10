@@ -8,6 +8,7 @@ const DEFAULTS = {
     short: 5,
     long: 15,
     auto: false,
+    autostart: false,
     sound: 'bell'
 };
 
@@ -42,6 +43,11 @@ function init() {
     setupEventListeners();
     resetCycle();
     render();
+
+    if (config.autostart) {
+        initAudio(); // Initialize audio context (might be blocked by browser policy without user interaction, but we try)
+        startTimer();
+    }
 }
 
 function parseUrlParams() {
@@ -60,6 +66,11 @@ function parseUrlParams() {
     const soundParam = params.get('sound');
     if (soundParam) {
         config.sound = soundParam;
+    }
+
+    const autostartParam = params.get('autostart');
+    if (autostartParam !== null) {
+        config.autostart = (autostartParam === 'true' || autostartParam === '1');
     }
 }
 
