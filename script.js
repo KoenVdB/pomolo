@@ -7,8 +7,7 @@ const DEFAULTS = {
     work: 25,
     short: 5,
     long: 15,
-    autorestart: false,
-    start: false,
+    auto: false,
     sound: 'bell'
 };
 
@@ -42,9 +41,6 @@ function init() {
     parseUrlParams();
     setupEventListeners();
     resetCycle();
-    if (config.start) {
-        startTimer();
-    }
     render();
 }
 
@@ -55,15 +51,10 @@ function parseUrlParams() {
     config.short = getPositiveIntParam(params, 'short', DEFAULTS.short);
     config.long = getPositiveIntParam(params, 'long', DEFAULTS.long);
 
-    // Auto can be "true", "1", or present
-    const autoParam = params.get('autorestart');
+    // Auto can be "true", "1", or present (if no value for boolean flag logic, though URLSearchParams usually needs value)
+    const autoParam = params.get('auto');
     if (autoParam !== null) {
-        config.autorestart = (autoParam === 'true' || autoParam === '1');
-    }
-
-    const startParam = params.get('start');
-    if (startParam !== null) {
-        config.start = (startParam === 'true' || startParam === '1');
+        config.auto = (autoParam === 'true' || autoParam === '1');
     }
 
     const soundParam = params.get('sound');
@@ -213,7 +204,7 @@ function completeSession(skipped = false) {
 
     setModeTime();
 
-    if (config.autorestart) {
+    if (config.auto) {
         startTimer();
     } else {
         render(); // Update UI to show new start time
