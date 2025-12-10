@@ -5,11 +5,11 @@
     --glass-bg: rgba(255, 255, 255, 0.1);
     --glass-border: rgba(255, 255, 255, 0.1);
     --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    
+
     --work-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5253 100%);
     --short-gradient: linear-gradient(135deg, #4ecdc4 0%, #45b7d1 100%);
     --long-gradient: linear-gradient(135deg, #a8e6cf 0%, #3dccc7 100%);
-    
+
     --bg-gradient-work: linear-gradient(45deg, #1a1a1a 0%, #2d1f1f 100%);
     --bg-gradient-short: linear-gradient(45deg, #1a1a1a 0%, #1f2d2b 100%);
     --bg-gradient-long: linear-gradient(45deg, #1a1a1a 0%, #1f292d 100%);
@@ -38,9 +38,11 @@ body {
 body.mode-work {
     background: var(--bg-gradient-work);
 }
+
 body.mode-short {
     background: var(--bg-gradient-short);
 }
+
 body.mode-long {
     background: var(--bg-gradient-long);
 }
@@ -69,7 +71,30 @@ body.mode-long {
 }
 
 header {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
+}
+
+.tomato-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
 }
 
 h1 {
@@ -180,6 +205,7 @@ footer {
     .time-display {
         font-size: 5rem;
     }
+
     .glass-panel {
         padding: 2rem 1.5rem;
     }
