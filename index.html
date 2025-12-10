@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1 id="mode-display">Work Time</h1>
+            <div id="cycle-display" class="cycle-indicator">Cycle 1/4</div>
+        </header>
+
+        <main>
+            <div class="timer-container">
+                <div id="time-display" class="time-display">25:00</div>
+            </div>
+
+            <div class="controls">
+                <button id="start-btn" class="btn btn-primary" aria-label="Start Timer">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 3L19 12L5 21V3Z" fill="currentColor"/>
+                    </svg>
+                </button>
+                <button id="pause-btn" class="btn btn-secondary hidden" aria-label="Pause Timer">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="6" y="4" width="4" height="16" fill="currentColor"/>
+                        <rect x="14" y="4" width="4" height="16" fill="currentColor"/>
+                    </svg>
+                </button>
+                <button id="reset-btn" class="btn btn-secondary" aria-label="Skip or Reset Timer">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 4V20L12 12L4 4ZM14 4V20H18V4H14Z" fill="currentColor"/>
+                    </svg>
+                </button>
+            </div>
+        </main>
+
+        <footer>
+            <p class="config-info">Configured via URL</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
