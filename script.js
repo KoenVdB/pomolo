@@ -57,10 +57,10 @@ function parseUrlParams() {
     config.short = getPositiveIntParam(params, 'short', DEFAULTS.short);
     config.long = getPositiveIntParam(params, 'long', DEFAULTS.long);
 
-    // Auto can be "true", "1", or present (if no value for boolean flag logic, though URLSearchParams usually needs value)
-    const autoParam = params.get('auto');
+    // Autorestart
+    const autoParam = params.get('autorestart') || params.get('auto'); // Support both for now
     if (autoParam !== null) {
-        config.auto = (autoParam === 'true' || autoParam === '1');
+        config.autorestart = (autoParam === 'true' || autoParam === '1');
     }
 
     const soundParam = params.get('sound');
@@ -215,7 +215,7 @@ function completeSession(skipped = false) {
 
     setModeTime();
 
-    if (config.auto) {
+    if (config.autorestart) {
         startTimer();
     } else {
         render(); // Update UI to show new start time
