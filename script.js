@@ -19,7 +19,7 @@ let state = {
     timeRemaining: 0,
     isRunning: false,
     cycleCount: 1, // 1-4
-    timerInterval: null
+    intervalId: null
 };
 
 // Audio Context (initialized on user interaction)
@@ -132,36 +132,35 @@ function startTimer() {
     if (state.isRunning) return;
     state.isRunning = true;
 
-    // Use performance.now() for better accuracy than pure setInterval drift
-    let lastTime = performance.now();
+    // Calculate target end time based on current wall clock
+    // Using Math.ceil to ensure we don't drop a second immediately if we are at X.999
+    const now = Date.now();
+    state.endTime = now + (state.timeRemaining * 1000);
 
-    state.timerInterval = requestAnimationFrame(function loop(currentTime) {
-        if (!state.isRunning) return;
+    state.intervalId = setInterval(() => {
+        const now = Date.now();
+        const secondsLeft = Math.ceil((state.endTime - now) / 1000);
 
-        const deltaTime = currentTime - lastTime;
-
-        if (deltaTime >= 1000) {
-            state.timeRemaining--;
-            lastTime = currentTime;
+        if (secondsLeft !== state.timeRemaining) {
+            state.timeRemaining = secondsLeft;
 
             if (state.timeRemaining <= 0) {
                 completeSession();
-                return; // Stop this loop
+                return;
             }
 
             render();
         }
-
-        state.timerInterval = requestAnimationFrame(loop);
-    });
+    }, 100);
 
     render();
 }
 
 function pauseTimer() {
     state.isRunning = false;
-    if (state.timerInterval) {
-        cancelAnimationFrame(state.timerInterval);
+    if (state.intervalId) {
+        clearInterval(state.intervalId);
+        state.intervalId = null;
     }
     render();
 }
