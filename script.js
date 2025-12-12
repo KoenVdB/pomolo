@@ -45,9 +45,29 @@ function init() {
     render();
 
     if (config.autostart) {
-        initAudio(); // Initialize audio context (might be blocked by browser policy without user interaction, but we try)
+        // Try to initialize, but don't crash if blocked
+        initAudio();
         startTimer();
     }
+
+    // Global unlock for AudioContext on first interaction
+    const unlockAudio = () => {
+        if (audioCtx) {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        } else {
+            initAudio();
+        }
+        // Remove listeners once triggers
+        document.removeEventListener('click', unlockAudio);
+        document.removeEventListener('keydown', unlockAudio);
+        document.removeEventListener('touchstart', unlockAudio);
+    };
+
+    document.addEventListener('click', unlockAudio);
+    document.addEventListener('keydown', unlockAudio);
+    document.addEventListener('touchstart', unlockAudio);
 }
 
 function parseUrlParams() {
@@ -104,7 +124,9 @@ function initAudio() {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     }
     if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
+        audioCtx.resume().catch(e => {
+            console.log("AudioContext resume failed (waiting for user interaction):", e);
+        });
     }
 }
 
